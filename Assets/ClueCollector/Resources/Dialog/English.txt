@@ -1,0 +1,191 @@
+awa = Test characters test characters test characters test characters test\ncharacters test characters test characters test characters test
+
+intro =
+As night falls, only the hum of the air conditioner remains in the dorm. \nI toss and turn, unable to close my eyes.\n
+Fragments of the day play back in my mind: \nthe truck on the road, the water buckets at the door, \nthe buzzing sound from upstairs, 
+and that girl in slippers... \nThese seemingly ordinary scenes swirl in my head like unassembled puzzle pieces.\n
+Perhaps only by sorting them out one by one, \npiecing together a reasonable answer, can I fall asleep at peace...\n
+
+ch1_1 =
+It all started in the morning. Today was the fourth day of vacation. \nAs usual, I finished breakfast and walked back to the dorm.\nBut suddenly, a truck came from behind, leaving me in a dilemma...
+ch1_2 =
+Would the truck go straight or turn right? Should I give way in advance?
+ch1_3 =
+I couldn’t help but ponder.
+ch1_4 =
+From whether I need to avoid it, what possibilities are there for the truck’s movement?
+ch1_5 =
+Stop immediately.
+ch1_6 =
+If it stops, I don’t need to dodge. But the probability is low, so I can ignore this case.
+ch1_7 =
+Go straight / stop in front.
+ch1_8 =
+The road ahead is too narrow for stopping or turning, and the driver didn’t honk. So most likely it won’t go straight.
+ch1_9 =
+Turn right.
+ch1_10 =
+Since the road ahead is narrow, turning right immediately would be the best choice.\nAnd if I recall correctly, that road usually has more traffic.
+ch1_11 =
+As the roar of the engine faded into the distance, I felt a wave of satisfaction, happily walking back to the dorm.
+ch1_12 =
+I looked around...
+ch1_13 =
+I noticed the truck was in the left lane, maybe to prepare for a right turn,\n but it could also be going straight. Unfortunately, this clue is useless.
+ch1_14 =
+I noticed the road ahead was narrow.
+ch1_15 =
+I noticed today’s truck was unusually quiet, the driver hadn’t honked.
+
+ch2_1 =
+In the dorm corridor, I saw two buckets of water placed in front of other dorm rooms. Nobody home? I wondered.
+ch2_2 =
+I peeked inside and saw the air conditioner running.
+ch2_3 =
+“So someone is here,” I muttered softly.
+ch2_4 =
+But the lights weren’t on, maybe they were still asleep...
+
+ch3_1 =
+Back in the dorm, I opened Ludum Dare 58 and found that the theme this time was “Collector.”\nI thought for a while but couldn’t come up with anything interesting.\nI couldn’t help sighing: What is this? I have no inspiration at all!\nMaybe it’s because I haven’t made a game in so long? Once again, I fell into panic—\nafraid I wouldn’t create anything interesting, afraid I’d repeat past failures, afraid...
+ch3_2 =
+......
+ch3_3 =
+......
+ch3_4 =
+Just as I was lost in thought, a buzzing sound reached my ears.
+ch3_5 =
+“Huh? Is my computer about to explode?”
+ch3_6 =
+I pressed my ear against the computer, but the sound didn’t seem to come from it.\nSo I began searching for the source.
+ch3_7 =
+......
+ch3_8 =
+It seemed inaudible on the balcony, inaudible in the hallway. My roommates had left,\nso it was probably coming from upstairs. What could it be? I wondered curiously.
+ch3_9 =
+What could it be?
+ch3_10 =
+My first thought was an electric toothbrush.
+ch3_11 =
+Since it’s not a sound you hear every day, and it lasted for quite a while,\nit shouldn’t be brushing teeth. People might brush at odd times,\nbut let’s assume others act normally.
+ch3_12 =
+Secondly, an electric shaver.
+ch3_13 =
+It has strong penetration, occasionally audible, and early morning after waking up—it fits perfectly.
+ch3_14 =
+Though it might not be the truth, I felt satisfied and even lucky.\nRecalling the truck and the buzzing sound, I stepped out of the room, glanced at the two water buckets, and fell into thought...
+ch3_15 =
+Could it be a drill?
+ch3_16 =
+The sound was very steady, but a drill should be intermittent.
+ch3_17 =
+What about a hair dryer?
+ch3_18 =
+Like the drill, it doesn’t quite match.
+ch3_19 =
+So I listened carefully again.
+ch3_20 =
+I think I’ve heard a similar sound before, but not every day, otherwise I wouldn’t have noticed.
+ch3_21 =
+It lasted about 4–5 minutes.
+ch3_22 =
+The frequency was very stable.
+ch3_23 =
+So I went upstairs to check. No signs of renovation workers.
+ch3_24 =
+And in the dorm directly above, the air conditioner was on, lights off.\nMaybe they were still asleep or had just woken up.
+
+ch4_1 =
+After an afternoon of brainstorming, my stomach started protesting.
+ch4_2 =
+Leaving my room, I saw the two buckets of water still standing there.\nThough the air conditioner was still running, the room remained dark.\nCould it be that everyone had left but forgot to turn it off?
+ch4_3 =
+But then why would they order two buckets of water in advance? And after four days, they still looked freshly delivered.
+ch4_4 =
+I thought and thought, but couldn’t figure it out. For now, better to just eat.
+ch4_5 =
+......
+
+ch5_1 =
+After dinner, on the way back to the dorm, I stopped to pick up a package.\nJust then, a girl caught my attention. Dressed lightly, she walked forward with her head down, eyes on her phone.\nWhere was she going? My thoughts gathered once again...
+ch5_2 =
+What could she be doing at this time?
+ch5_3 =
+Going to eat?
+ch5_4 =
+There are closer restaurants nearby. And girls in this year usually eat together,\nso probably not eating out.
+ch5_5 =
+Or picking up takeout?
+ch5_6 =
+After ruling out some options, plus she was heading toward the shortcut to the takeout lockers,\nthe likelihood she was picking up food increased.
+ch5_7 =
+Watching her walk firmly toward the takeout lockers, I smiled in satisfaction...
+ch5_8 =
+......
+ch5_9 =
+Or maybe collecting a package?
+ch5_10 =
+Our packages are stored outside campus, and you pass by the takeout lockers to get there.
+ch5_11 =
+She took the shortcut toward the takeout lockers.\nThough the package lockers are also nearby, usually one wouldn’t walk that quickly for a package.
+ch5_12 =
+Or maybe the convenience store?
+ch5_13 =
+But since she didn’t take the stairs earlier and walked a longer route,\nthe chance she was heading there decreased.
+ch5_14 =
+Going out with friends?
+ch5_15 =
+But wearing slippers isn’t that convenient.
+ch5_16 =
+Any clues?
+ch5_17 =
+Looking down at her phone isn’t really a clue—everyone in college does that.
+ch5_18 =
+Although I had already eaten, it wasn’t too late.
+ch5_19 =
+The restaurant in her direction is farther away, while there’s a closer one nearby.
+ch5_20 =
+Judging by her outfit and demeanor, she’s most likely a young undergrad.
+ch5_21 =
+She was wearing slippers, so most likely came from the dorm.
+ch5_22 =
+She didn’t take the stairs earlier.
+ch5_23 =
+She headed toward the shortcut to the takeout lockers.
+
+ch6_1 =
+On the way back to the dorm, the two buckets were still standing there. I looked inside through the window.\nEh, the lights were on—so someone was inside?
+ch6_2 =
+My brain froze. Though I had seen buckets left outside for a week before,\nI was still deeply shocked.
+ch6_3 =
+Could people really be this lazy? Or... was there more to it?
+ch6_4 =
+I tried to find them an excuse.
+ch6_5 =
+Maybe they hadn’t woken up yet?
+ch6_6 =
+But by night they should’ve had enough sleep.
+ch6_7 =
+Or maybe they ordered the water for themselves, and the one who ordered it wasn’t there to bring it in?
+ch6_8 =
+But usually no one orders two buckets just for themselves.\nOrdering for the whole dorm is normal. Otherwise, the dorm’s relationships must be really bad.
+ch6_9 =
+Could the delivery guy have made a mistake?
+ch6_10 =
+One wrong bucket is possible, but two? Almost impossible.
+ch6_11 =
+Maybe the room is too messy, no space to put them.
+ch6_12 =
+Feels like laziness is the only option left.
+ch6_13 =
+Or simply too lazy, so no one brought them in.
+ch6_14 =
+I felt relieved.
+ch6_15 =
+I could hardly believe the “truth” I deduced,\nbut at least my doubts had all been answered.
+ch6_16 =
+My thoughts gradually faded. Sleepiness overcame me. Tonight... will I finally dream well...?
+ch6_17 =
+Thanks for playing!
+ch6_18 =
+What can the two buckets of water really reveal?
