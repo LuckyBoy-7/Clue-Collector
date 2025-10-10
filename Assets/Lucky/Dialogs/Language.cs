@@ -10,22 +10,22 @@ namespace Lucky.Dialogs
         public string name;
         private DefaultDict<string, List<string>> _keyToRawTexts;
 
-        public Language(string name, string allText)
+        public Language(string name, string fileContent)
         {
             this.name = name;
-            _keyToRawTexts = ParseAllText(allText);
+            _keyToRawTexts = ParseAllText(fileContent);
         }
 
         public List<string> this[string key] => _keyToRawTexts[key];
 
 
-        public static DefaultDict<string, List<string>> ParseAllText(string allText)
+        public static DefaultDict<string, List<string>> ParseAllText(string fileContent)
         {
             DefaultDict<string, List<string>> res = new(() => new());
             string key = "";
             // 两个有内容的行之间有多少空行(在 split 之后)
             int emptyLineCount = 0;
-            foreach (string rawLine in allText.Split("\n"))
+            foreach (string rawLine in fileContent.Split("\n"))
             {
                 string line = rawLine.Trim();
                 // 跳过空行

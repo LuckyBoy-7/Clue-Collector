@@ -1,13 +1,13 @@
 using Lucky.Extensions;
 using UnityEngine;
 
-namespace Lucky.Shaders
+namespace Lucky.Shaders.Misc.WaterMirror.Camera
 {
     [RequireComponent(typeof(SpriteRenderer))]
     public class WaterMirror : MonoBehaviour
     {
         private SpriteRenderer sr;
-        private Camera waterCamera;
+        private UnityEngine.Camera waterCamera;
         private RenderTexture renderTexture;
         public Material material;
         public int precise = 100;
@@ -15,7 +15,7 @@ namespace Lucky.Shaders
         private void Awake()
         {
             sr = GetComponent<SpriteRenderer>();
-            waterCamera = new GameObject("WaterMirrorCamera").AddComponent<Camera>();
+            waterCamera = new GameObject("WaterMirrorCamera").AddComponent<UnityEngine.Camera>();
             waterCamera.orthographic = true;
             // 先把湖面的比例搞对了, 这里保持高度, 缩放宽度
             float aspect = waterCamera.aspect; // w / h

@@ -1,8 +1,5 @@
-using System.Collections.Generic;
-using Lucky.Extensions;
 using Lucky.Interactive;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace ClueCollector.Scripts
 {

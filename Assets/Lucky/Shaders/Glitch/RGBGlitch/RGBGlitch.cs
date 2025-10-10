@@ -1,6 +1,7 @@
+using Lucky.Shaders.PostProcess;
 using UnityEngine;
 
-namespace Lucky.Shaders.PostProcess
+namespace Lucky.Shaders.Glitch.RGBGlitch
 {
 
     public class RGBGlitch : PostEffectsBase

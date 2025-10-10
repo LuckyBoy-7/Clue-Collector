@@ -6,32 +6,32 @@ namespace Lucky.Extensions
     {
         public static void SetSpeedX(this Rigidbody2D orig, float x)
         {
-            orig.velocity = orig.velocity.WithX(x);
+            orig.linearVelocity = orig.linearVelocity.WithX(x);
         }
 
         public static void SetSpeedY(this Rigidbody2D orig, float y)
         {
-            orig.velocity = orig.velocity.WithY(y);
+            orig.linearVelocity = orig.linearVelocity.WithY(y);
         }
 
         public static void AddSpeedX(this Rigidbody2D orig, float x)
         {
-            orig.velocity = orig.velocity.WithX(orig.velocity.x + x);
+            orig.linearVelocity = orig.linearVelocity.WithX(orig.linearVelocity.x + x);
         }
 
         public static void AddSpeedY(this Rigidbody2D orig, float y)
         {
-            orig.velocity = orig.velocity.WithY(orig.velocity.y + y);
+            orig.linearVelocity = orig.linearVelocity.WithY(orig.linearVelocity.y + y);
         }
         
         public static void MulSpeedX(this Rigidbody2D orig, float k)
         {
-            orig.velocity = orig.velocity.WithX(orig.velocity.x * k);
+            orig.linearVelocity = orig.linearVelocity.WithX(orig.linearVelocity.x * k);
         }
         
         public static void MulSpeedY(this Rigidbody2D orig, float k)
         {
-            orig.velocity = orig.velocity.WithY(orig.velocity.y * k);
+            orig.linearVelocity = orig.linearVelocity.WithY(orig.linearVelocity.y * k);
         }
     }
 }

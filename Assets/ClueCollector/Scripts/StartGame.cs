@@ -1,27 +1,28 @@
 using DG.Tweening;
+using Lucky.Animation.Color;
+using Lucky.Utilities.Groups;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace ClueCollector.Scripts
 {
+    [RequireComponent(typeof(ButtonComponentGroup))]
     public class StartGame : MonoBehaviour
     {
-        public Button button1;
-        public Button button2;
-        public FadeController fadeController;
+        public ColorController colorController;
+        private ButtonComponentGroup buttonComponentGroup;
 
         public bool started;
 
         private void Awake()
         {
-            button1.OnButtonClicked += OnButtonClicked;
-            button2.OnButtonClicked += OnButtonClicked;
+            buttonComponentGroup = GetComponent<ButtonComponentGroup>();
+            buttonComponentGroup.DoAction(button => button.OnButtonClicked += OnButtonClicked);
         }
 
         private void OnDestroy()
         {
-            button1.OnButtonClicked -= OnButtonClicked;
-            button2.OnButtonClicked -= OnButtonClicked;
+            buttonComponentGroup.DoAction(button => button.OnButtonClicked -= OnButtonClicked);
         }
 
         private void OnButtonClicked()
@@ -30,11 +31,14 @@ namespace ClueCollector.Scripts
                 return;
             started = true;
 
-            DOTween.To(() => fadeController.alpha, (alpha) => fadeController.alpha = alpha, 0, 1)
+            DOTween.To(() => colorController.Alpha, (alpha) => colorController.Alpha = alpha, 0, 1)
                 .onComplete += () => SceneManager.LoadScene("ClueCollector");
 
-            button1.Disable();
-            button2.Disable();
+            buttonComponentGroup.DoAction(button =>
+            {
+                button.dontUpdateColor = true;
+                button.Disable();
+            });
         }
     }
 }

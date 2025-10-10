@@ -1,29 +1,28 @@
-using ClueCollector.Scripts.BoxNodes;
-using Lucky.Managers;
+using Lucky;
 using Lucky.Utilities;
+using Lucky.Utilities.Groups;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace ClueCollector.Scripts
 {
     public class ThumbnailManager : Singleton<ThumbnailManager>
     {
+        public GameObject centerImage;
         public Image thumbnailImageInner;
-        public Image thumbnailImageOuter;
         public Thumbnail thumbnailPrefab;
 
 
         public void ShowImage(Sprite sprite)
         {
+            centerImage.SetActive(true);
             thumbnailImageInner.sprite = sprite;
-            thumbnailImageInner.enabled = true;
-            thumbnailImageOuter.enabled = true;
         }
 
         public void HideImage()
         {
-            thumbnailImageInner.enabled = false;
-            thumbnailImageOuter.enabled = false;
+            centerImage.SetActive(false);
         }
 
         public void CreateThumbnail(Sprite sprite)

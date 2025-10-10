@@ -1,7 +1,6 @@
 using Lucky.Dialogs;
 using Lucky.Inputs;
 using Lucky.Interactive;
-using Lucky.Managers;
 using UnityEngine;
 using Input = UnityEngine.Input;
 
@@ -14,7 +13,7 @@ namespace Lucky
     {
         public const float OneFrameTime = 1 / 60f;
 
-        [SerializeField]private string currentLanguage;
+        [SerializeField] public string startLanguage = "Simplified Chinese";
 
 
         protected override void SingletonAwake()
@@ -23,6 +22,7 @@ namespace Lucky
             Time.fixedDeltaTime = OneFrameTime;
             InputConfig.Initialize();
             Dialog.Initialize();
+            Dialog.TrySetLanguage(startLanguage);
             GameCursor.Instance = new GameCursor();
 
             DontDestroyOnLoad(gameObject);
@@ -32,8 +32,6 @@ namespace Lucky
         {
             InputManager.Update();
             GameCursor.Instance.Update();
-            if (Dialog.CurrentLanguage != null)
-                currentLanguage = Dialog.CurrentLanguage.name;
         }
 
 

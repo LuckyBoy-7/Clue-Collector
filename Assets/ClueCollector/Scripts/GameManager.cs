@@ -1,5 +1,5 @@
 using ClueCollector.Scripts.BoxNodes;
-using Lucky.Managers;
+using Lucky;
 using Lucky.Utilities;
 using UnityEngine;
 

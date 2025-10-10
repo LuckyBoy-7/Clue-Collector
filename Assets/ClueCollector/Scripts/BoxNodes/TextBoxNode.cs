@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Lucky.Audio;
 using Lucky.Dialogs;
-using Lucky.Extensions;
 using Lucky.Interactive;
+using Lucky.Text;
 using Lucky.Utilities;
-using Sirenix.Utilities;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace ClueCollector.Scripts.BoxNodes

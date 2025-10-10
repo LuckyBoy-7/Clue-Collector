@@ -1,4 +1,5 @@
 using Lucky.Dialogs;
+using Lucky.Interactive.Impl;
 using UnityEngine;
 
 namespace ClueCollector.Scripts
@@ -30,7 +31,7 @@ namespace ClueCollector.Scripts
         {
             if (languageType == LanguageTypes.Chinese)
             {
-                Dialog.CurrentLanguage = Dialog.languages["Chinese"];
+                Dialog.CurrentLanguage = Dialog.languages["Simplified Chinese"];
             }
             else
             {

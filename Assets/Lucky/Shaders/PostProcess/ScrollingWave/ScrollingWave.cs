@@ -1,7 +1,6 @@
 using UnityEngine;
 
-
-namespace Lucky.Shaders.PostProcess
+namespace Lucky.Shaders.PostProcess.ScrollingWave
 {
 
     public class ScrollingWave : PostEffectsBase

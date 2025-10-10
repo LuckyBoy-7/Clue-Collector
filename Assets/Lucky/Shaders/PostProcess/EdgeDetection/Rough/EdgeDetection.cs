@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Lucky.Shaders.PostProcess
+namespace Lucky.Shaders.PostProcess.EdgeDetection.Rough
 {
     public class EdgeDetection : PostEffectsBase
     {

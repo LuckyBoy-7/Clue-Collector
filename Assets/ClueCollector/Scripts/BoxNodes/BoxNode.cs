@@ -1,6 +1,6 @@
-using System;
 using Lucky.Animation;
-using Lucky.Extensions;
+using Lucky.Animation.Line;
+using Lucky.Animation.SineWaveAnimation;
 using Lucky.Interactive;
 using UnityEngine;
 

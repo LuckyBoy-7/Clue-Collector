@@ -1,7 +1,6 @@
 using UnityEngine;
 
-
-namespace Lucky.Shaders.PostProcess
+namespace Lucky.Shaders.PostProcess.OldTV
 {
 
     public class OldTV : PostEffectsBase

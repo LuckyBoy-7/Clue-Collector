@@ -1,7 +1,7 @@
 using Lucky.Shaders.PostProcess;
 using UnityEngine;
 
-namespace Lucky.Shaders
+namespace Lucky.Shaders.Misc.Metaball
 {
 
     [ExecuteInEditMode]

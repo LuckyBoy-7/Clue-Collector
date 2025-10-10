@@ -108,15 +108,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -148,6 +150,7 @@ GameObject:
   - component: {fileID: 7593028834759141478}
   - component: {fileID: 4932429546043347542}
   - component: {fileID: 629191821872754283}
+  - component: {fileID: 3766424055811333440}
   m_Layer: 5
   m_Name: ButtonBox
   m_TagString: Untagged
@@ -274,9 +277,26 @@ MonoBehaviour:
   disabledColor: {r: 1, g: 1, b: 1, a: 1}
   hoverColor: {r: 1, g: 1, b: 1, a: 0.19607843}
   pressColor: {r: 1, g: 1, b: 1, a: 1}
-  outline: {fileID: 2621153742767424139}
-  text: {fileID: 1507502634699322683}
+  colorController: {fileID: 0}
   dontUpdateColor: 0
+--- !u!114 &3766424055811333440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4127302658239774996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193d0c9f3faf4a758ab20f5af230aa30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Lucky.Animation.Fade.ColorController
+  affectColor: 1
+  affectAlpha: 1
+  graphics:
+  - {fileID: 2621153742767424139}
+  - {fileID: 1507502634699322683}
+  spriteRenderers: []
 --- !u!1 &7790561544727509327
 GameObject:
   m_ObjectHideFlags: 0

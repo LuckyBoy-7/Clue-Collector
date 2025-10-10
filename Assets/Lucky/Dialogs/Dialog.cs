@@ -7,9 +7,9 @@ namespace Lucky.Dialogs
 {
     public static class Dialog
     {
-        public const string AssetRootPath = "Dialog/";
+        private const string AssetRootPath = "Dialog/";
 
-        public static Dictionary<string, Language> languages = new();
+        public static readonly Dictionary<string, Language> languages = new();
 
         private static Language _currentLanguage = null;
 
@@ -17,7 +17,7 @@ namespace Lucky.Dialogs
         {
             get
             {
-                _currentLanguage ??= new Language("Chinese", "");
+                _currentLanguage ??= new Language("Simplified Chinese", "");
 
                 return _currentLanguage;
             }
@@ -48,8 +48,19 @@ namespace Lucky.Dialogs
         public static List<string> Clean(string localizationKey)
         {
             if (!CurrentLanguage.ContainsKey(localizationKey))
-                return new List<string>(){$"{{{localizationKey}}}"};
+                return new List<string>() { $"{{{localizationKey}}}" };
             return CurrentLanguage[localizationKey];
+        }
+
+        public static bool TrySetLanguage(string name)
+        {
+            if (languages.TryGetValue(name, out var language))
+            {
+                CurrentLanguage = language;
+                return true;
+            }
+
+            return false;
         }
     }
 }

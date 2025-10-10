@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -42,8 +42,8 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
-  m_GIWorkflowMode: 1
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -66,9 +66,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -145,6 +142,7 @@ GameObject:
   - component: {fileID: 731173655}
   - component: {fileID: 731173658}
   - component: {fileID: 731173657}
+  - component: {fileID: 731173659}
   m_Layer: 5
   m_Name: Intro
   m_TagString: Untagged
@@ -211,9 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17d93a12ea6c47fd97d29fe514cc1f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button1: {fileID: 1471137011}
-  button2: {fileID: 1355807970}
-  fadeController: {fileID: 731173658}
+  colorController: {fileID: 731173658}
   started: 0
 --- !u!114 &731173658
 MonoBehaviour:
@@ -227,12 +223,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 193d0c9f3faf4a758ab20f5af230aa30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  affectColor: 1
+  affectAlpha: 1
   graphics:
   - {fileID: 1471137014}
   - {fileID: 1733486502}
   - {fileID: 1355807973}
   - {fileID: 170594162}
-  alpha: 1
+--- !u!114 &731173659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 731173653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f80f0ada36fc4cceab8f772722911c53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Lucky.Utilities.Groups.ButtonComponentGroup
+  components:
+  - {fileID: 1471137011}
+  - {fileID: 1355807970}
 --- !u!1 &900003086
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,6 +477,10 @@ PrefabInstance:
     - target: {fileID: 1507502634699322683, guid: b8355c791b2194142a6b71c08ace44ae, type: 3}
       propertyPath: m_VerticalAlignment
       value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 1507502634699322683, guid: b8355c791b2194142a6b71c08ace44ae, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 4127302658239774996, guid: b8355c791b2194142a6b71c08ace44ae, type: 3}
       propertyPath: m_Name
@@ -808,6 +824,10 @@ PrefabInstance:
     - target: {fileID: 1507502634699322683, guid: b8355c791b2194142a6b71c08ace44ae, type: 3}
       propertyPath: m_VerticalAlignment
       value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 1507502634699322683, guid: b8355c791b2194142a6b71c08ace44ae, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 2621153742767424139, guid: b8355c791b2194142a6b71c08ace44ae, type: 3}
       propertyPath: m_Sprite
