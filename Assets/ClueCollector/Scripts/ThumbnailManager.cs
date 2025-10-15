@@ -1,8 +1,6 @@
 using Lucky;
 using Lucky.Utilities;
-using Lucky.Utilities.Groups;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace ClueCollector.Scripts

@@ -3,271 +3,198 @@ using UnityEditor;
 using System.IO;
 using System.Text.RegularExpressions;
 
+/// <summary>
+/// Asset 批量改名工具 - 提供多种资源重命名功能
+/// </summary>
 public class AssetBatchRename : EditorWindow
 {
-    private string baseName = "Asset";
-    private int startNumber = 0;
-    private string prefix = "";
-    private string suffix = "";
-    private string findText = "";
-    private string replaceText = "";
-    
+    // 基础改名参数
+    private string baseName = "Asset"; // 基础名称，用于批量重命名
+    private string delimiter = "_"; // 基础名称，用于批量重命名
+    private int startNumber = 0; // 起始数字，用于生成序号
+
+    /// <summary>
+    /// 在 Assets 菜单中添加工具入口
+    /// </summary>
     [MenuItem("Assets/批量改名工具", false, 20)]
     static void ShowWindow()
     {
+        // 显示编辑器窗口
         GetWindow<AssetBatchRename>("Asset 批量改名");
     }
-    
+
+    /// <summary>
+    /// 窗口启用时订阅选择改变事件
+    /// </summary>
+    void OnEnable()
+    {
+        Selection.selectionChanged += Repaint;
+    }
+
+    /// <summary>
+    /// 窗口禁用时取消订阅事件
+    /// </summary>
+    void OnDisable()
+    {
+        Selection.selectionChanged -= Repaint;
+    }
+
+    /// <summary>
+    /// 绘制编辑器窗口 UI
+    /// </summary>
     void OnGUI()
     {
+        // 标题
         GUILayout.Label("Asset 批量改名工具", EditorStyles.boldLabel);
+        // 显示当前选中的资源数量
         EditorGUILayout.HelpBox($"当前选中: {Selection.objects.Length} 个资源", MessageType.Info);
-        
+
         GUILayout.Space(10);
-        
-        // 基础改名
+
+        // ========== 基础改名区域 ==========
         GUILayout.Label("基础改名", EditorStyles.boldLabel);
         baseName = EditorGUILayout.TextField("基础名称", baseName);
+        delimiter = EditorGUILayout.TextField("分隔符", delimiter);
         startNumber = EditorGUILayout.IntField("起始数字", startNumber);
-        
-        if (GUILayout.Button("重命名为: 名称_数字"))
-        {
+        // 执行基础改名按钮
+        if (GUILayout.Button($"重命名为: 名称{delimiter}数字"))
             BasicRename();
-        }
-        
+
         GUILayout.Space(10);
-        
-        // 前缀后缀
-        GUILayout.Label("添加前缀/后缀", EditorStyles.boldLabel);
-        prefix = EditorGUILayout.TextField("前缀", prefix);
-        suffix = EditorGUILayout.TextField("后缀", suffix);
-        
-        EditorGUILayout.BeginHorizontal();
-        if (GUILayout.Button("添加前缀"))
-        {
-            AddPrefix();
-        }
-        if (GUILayout.Button("添加后缀"))
-        {
-            AddSuffix();
-        }
-        EditorGUILayout.EndHorizontal();
-        
-        GUILayout.Space(10);
-        
-        // 查找替换
-        GUILayout.Label("查找替换", EditorStyles.boldLabel);
-        findText = EditorGUILayout.TextField("查找", findText);
-        replaceText = EditorGUILayout.TextField("替换为", replaceText);
-        
-        if (GUILayout.Button("执行替换"))
-        {
-            FindReplace();
-        }
-        
-        GUILayout.Space(10);
-        
-        // 实用工具
+
+        // ========== 实用工具区域 ==========
         GUILayout.Label("实用工具", EditorStyles.boldLabel);
-        
+
+        // 第一行：移除数字和空格
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("移除数字"))
-        {
             RemoveNumbers();
-        }
+
         if (GUILayout.Button("移除空格"))
-        {
             RemoveSpaces();
-        }
+
         EditorGUILayout.EndHorizontal();
-        
+
+        // 第二行：大小写转换
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("转小写"))
-        {
             ToLowerCase();
-        }
+
         if (GUILayout.Button("转大写"))
-        {
             ToUpperCase();
-        }
+
         EditorGUILayout.EndHorizontal();
     }
-    
+
+    /// <summary>
+    /// 基础改名：将选中的资源重命名为 "基础名称 + 分隔符 + 序号" 格式
+    /// </summary>
     void BasicRename()
     {
-        Object[] selected = Selection.objects;
-        
-        if (selected.Length == 0)
-        {
-            ShowError("请先在 Project 窗口选择要改名的资源");
-            return;
-        }
-        
+        if (!ValidateSelection()) return;
+
+        var selected = Selection.objects;
         for (int i = 0; i < selected.Length; i++)
         {
             string path = AssetDatabase.GetAssetPath(selected[i]);
-            string extension = Path.GetExtension(path);
-            string newName = $"{baseName}_{startNumber + i}{extension}";
-            
-            AssetDatabase.RenameAsset(path, Path.GetFileNameWithoutExtension(newName));
-        }
-        
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-        Debug.Log($"已重命名 {selected.Length} 个资源");
-    }
-    
-    void AddPrefix()
-    {
-        if (string.IsNullOrEmpty(prefix))
-        {
-            ShowError("请输入前缀");
-            return;
-        }
-        
-        Object[] selected = Selection.objects;
-        
-        foreach (var obj in selected)
-        {
-            string path = AssetDatabase.GetAssetPath(obj);
-            string oldName = Path.GetFileNameWithoutExtension(path);
-            string newName = prefix + oldName;
-            
+            string newName = $"{baseName}{delimiter}{startNumber + i}";
             AssetDatabase.RenameAsset(path, newName);
         }
-        
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-        Debug.Log($"已添加前缀: {selected.Length} 个资源");
+
+        SaveAndRefresh($"已重命名 {selected.Length} 个资源");
     }
-    
-    void AddSuffix()
+
+    /// <summary>
+    /// 移除资源名称中的数字、下划线、破折号和括号
+    /// </summary>
+    void RemoveNumbers()
     {
-        if (string.IsNullOrEmpty(suffix))
-        {
-            ShowError("请输入后缀");
-            return;
-        }
-        
-        Object[] selected = Selection.objects;
-        
-        foreach (var obj in selected)
-        {
-            string path = AssetDatabase.GetAssetPath(obj);
-            string oldName = Path.GetFileNameWithoutExtension(path);
-            string newName = oldName + suffix;
-            
-            AssetDatabase.RenameAsset(path, newName);
-        }
-        
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-        Debug.Log($"已添加后缀: {selected.Length} 个资源");
+        RenameWithTransform(oldName => Regex.Replace(oldName, @"\d", ""));
     }
-    
-    void FindReplace()
+
+    /// <summary>
+    /// 移除资源名称中的所有空格
+    /// </summary>
+    void RemoveSpaces()
     {
-        if (string.IsNullOrEmpty(findText))
+        RenameWithTransform(oldName => oldName.Replace(" ", ""));
+    }
+
+    /// <summary>
+    /// 将资源名称转换为小写
+    /// </summary>
+    void ToLowerCase()
+    {
+        RenameWithTransform(oldName => oldName.ToLower());
+    }
+
+    /// <summary>
+    /// 将资源名称转换为大写
+    /// </summary>
+    void ToUpperCase()
+    {
+        RenameWithTransform(oldName => oldName.ToUpper());
+    }
+
+// ========== 辅助方法 ==========
+
+    /// <summary>
+    /// 验证是否有选中资源
+    /// </summary>
+    bool ValidateSelection()
+    {
+        if (Selection.objects.Length == 0)
         {
-            ShowError("请输入要查找的文本");
-            return;
+            ShowError("请先在 Project 窗口选择要改名的资源");
+            return false;
         }
-        
-        Object[] selected = Selection.objects;
+
+        return true;
+    }
+
+    /// <summary>
+    /// 对选中的资源应用名称转换函数
+    /// </summary>
+    /// <param name="transform">名称转换函数</param>
+    void RenameWithTransform(System.Func<string, string> transform)
+    {
+        if (!ValidateSelection()) return;
+
         int count = 0;
-        
-        foreach (var obj in selected)
+        foreach (var obj in Selection.objects)
         {
             string path = AssetDatabase.GetAssetPath(obj);
             string oldName = Path.GetFileNameWithoutExtension(path);
-            
-            if (oldName.Contains(findText))
+            string newName = transform(oldName);
+
+            if (oldName != newName)
             {
-                string newName = oldName.Replace(findText, replaceText);
                 AssetDatabase.RenameAsset(path, newName);
                 count++;
             }
         }
-        
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-        Debug.Log($"已替换 {count} 个资源的名称");
+
+        SaveAndRefresh(count > 0 ? $"已处理 {count} 个资源" : "没有资源需要修改");
     }
-    
-    void RemoveNumbers()
+
+    /// <summary>
+    /// 保存资源并刷新，同时输出日志
+    /// </summary>
+    void SaveAndRefresh(string message = null)
     {
-        Object[] selected = Selection.objects;
-        
-        foreach (var obj in selected)
-        {
-            string path = AssetDatabase.GetAssetPath(obj);
-            string oldName = Path.GetFileNameWithoutExtension(path);
-            string newName = Regex.Replace(oldName, @"[\d_\-\(\)]", "");
-            
-            if (oldName != newName)
-            {
-                AssetDatabase.RenameAsset(path, newName);
-            }
-        }
-        
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
-    }
-    
-    void RemoveSpaces()
-    {
-        Object[] selected = Selection.objects;
-        
-        foreach (var obj in selected)
+
+        if (!string.IsNullOrEmpty(message))
         {
-            string path = AssetDatabase.GetAssetPath(obj);
-            string oldName = Path.GetFileNameWithoutExtension(path);
-            string newName = oldName.Replace(" ", "");
-            
-            if (oldName != newName)
-            {
-                AssetDatabase.RenameAsset(path, newName);
-            }
+            Debug.Log(message);
         }
-        
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
     }
-    
-    void ToLowerCase()
-    {
-        Object[] selected = Selection.objects;
-        
-        foreach (var obj in selected)
-        {
-            string path = AssetDatabase.GetAssetPath(obj);
-            string oldName = Path.GetFileNameWithoutExtension(path);
-            string newName = oldName.ToLower();
-            
-            AssetDatabase.RenameAsset(path, newName);
-        }
-        
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-    }
-    
-    void ToUpperCase()
-    {
-        Object[] selected = Selection.objects;
-        
-        foreach (var obj in selected)
-        {
-            string path = AssetDatabase.GetAssetPath(obj);
-            string oldName = Path.GetFileNameWithoutExtension(path);
-            string newName = oldName.ToUpper();
-            
-            AssetDatabase.RenameAsset(path, newName);
-        }
-        
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-    }
-    
+
+    /// <summary>
+    /// 显示错误对话框
+    /// </summary>
+    /// <param name="message">错误信息</param>
     void ShowError(string message)
     {
         EditorUtility.DisplayDialog("错误", message, "确定");

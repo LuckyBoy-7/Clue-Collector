@@ -1,114 +1,118 @@
 using System.Collections.Generic;
+using Lucky.Extensions;
 using Lucky.Interactive;
-using Lucky.Utilities;
+using Lucky.Text.TextEffect;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
 namespace Lucky.Text
 {
     /// <summary>
-    /// 感觉能用上的地方比较局限, 主要用在静态点的地方吧(也就是无对话文字直接显示, 当然逐字显示也可以兼容, 但先这么放着吧)
+    /// &lt;link=123&gt;&lt;/link&gt;
     /// </summary>
-    [RequireComponent(typeof(TMP_Text))]
     public class HyperLink : MonoBehaviour
     {
-        public DialogueText dialogueText;
-        public Color linkColor = Color.red; // 未访问状态的color
-        public Color pressedColor = Color.green; // 点击时的color
-        public Color visitedColor = Color.blue; // 点击过后的color
-        private TMP_Text Text;
+        private TextController textController;
+        private TextEffectController textEffectController;
+        public Color linkColor = Color.red;
+        public Color pressedColor = Color.green;
+        public Color visitedColor = Color.blue;
+        private TMP_Text text;
         public Texture2D HandTexture;
-        private Dictionary<string, bool> linkVisited = new();
-        private string rawContent = "";
-        private string pressedId = "";
-        private string hoverId = "";
+        [ShowInInspector] private HashSet<string> linkVisited = new();
+        [SerializeField] private string pressedId = "";
+        [SerializeField] private string hoverId = "";
 
-        public bool CanInteract => dialogueText == null || !dialogueText.isTalking;
+        public bool CanInteract => textController == null || !textController.isTalking;
 
         private void Awake()
         {
-            Text = GetComponent<TMP_Text>();
-            Text.ForceMeshUpdate();
-        }
-
-        private void Start()
-        {
-            ResetLink();
+            text = GetComponent<TMP_Text>();
+            textController = GetComponent<TextController>();
+            textEffectController = GetComponent<TextEffectController>();
         }
 
         public void ResetLink()
         {
             linkVisited.Clear();
-            foreach (var info in Text.textInfo.linkInfo)
-            {
-                linkVisited[info.GetLinkID()] = false;
-            }
-
-            rawContent = Text.text;
         }
 
-        public void FixedUpdate()
+        public void Update()
         {
             if (!CanInteract)
                 return;
-            // 这里mouse pos视情况而定，如果纯ui就用game cursor的，如果是overlay的canvas直接传屏幕坐标即可
-            // int linkIndex = TMP_TextUtilities.FindIntersectingLink(tmpText, GameCursor.MouseWorldPos, null);
-            int hoveringLinkIndex = TMP_TextUtilities.FindIntersectingLink(Text, GameCursor.MouseScreenPosition, null);
-            if (hoveringLinkIndex != -1) // 如果点击在超链接上
+
+            int hoveringLinkIndex = TMP_TextUtilities.FindIntersectingLink(text, GameCursor.MouseScreenPosition, null);
+            if (hoveringLinkIndex != -1)
             {
+                hoverId = text.textInfo.linkInfo[hoveringLinkIndex].GetLinkID();
                 if (Input.GetMouseButtonDown(0))
-                    pressedId = Text.textInfo.linkInfo[hoveringLinkIndex].GetLinkID();
-                hoverId = Text.textInfo.linkInfo[hoveringLinkIndex].GetLinkID();
+                    pressedId = hoverId;
             }
             else
             {
                 hoverId = "";
             }
 
-            // 第一次点击发送事件
             if (Input.GetMouseButtonUp(0) && pressedId != "")
             {
-                if (!linkVisited[pressedId])
-                {
-                    // EventManager.instance.Broadcast($"Link{pressedId}Pressed");
-                    linkVisited[pressedId] = true;
-                }
-
+                linkVisited.Add(pressedId);
                 pressedId = "";
             }
-        }
 
-        private void Update()
-        {
-            // 设置鼠标样式
+            // 只管鼠标样式
             if ((pressedId != "" || hoverId != "") && HandTexture != null)
                 Cursor.SetCursor(HandTexture, new Vector2(10, 0), CursorMode.Auto);
             else
                 Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
-            string tmpContent = rawContent;
-            foreach (var linkInfo in Text.textInfo.linkInfo)
+            if (textEffectController == null)
+                ApplyLinkColors();
+        }
+
+        // 关键：直接操作顶点颜色，不改文本！
+        public void ApplyLinkColors()
+        {
+            foreach (var linkInfo in text.textInfo.linkInfo)
             {
-                string linkContent = linkInfo.GetLinkText();
                 string linkId = linkInfo.GetLinkID();
-                string pattern = HtmlUtils.WrapTag(linkContent, "link", linkId);
 
-                Color color;
-                if (linkId == pressedId)
-                    color = pressedColor;
-                else if (linkVisited[linkId])
-                    color = visitedColor;
-                else
-                    color = linkColor;
-                string colorString = "#" + ColorUtils.ToHexString(color);
+                Color32 color = GetLinkColorByID(linkId);
 
-                tmpContent = tmpContent.Replace(pattern, HtmlUtils.WrapTag(pattern, "color", colorString));
-                // 因为下划线的颜色也会被影响所以放最后
-                if (CanInteract && (linkId == hoverId || linkId == pressedId))
-                    tmpContent = tmpContent.Replace(pattern, HtmlUtils.WrapTag(pattern, "u"));
+                // 直接给这段文字的所有字符染色
+                for (int i = linkInfo.linkTextfirstCharacterIndex; i <= linkInfo.linkTextLength + linkInfo.linkTextfirstCharacterIndex - 1; i++)
+                {
+                    var charInfo = text.textInfo.characterInfo[i];
+                    if (!charInfo.isVisible)
+                        continue;
+
+                    int vertexIndex = charInfo.vertexIndex;
+                    int materialIndex = charInfo.materialReferenceIndex;
+
+                    for (int j = 0; j < 4; j++)
+                    {
+                        Color32 vertexColor = text.textInfo.meshInfo[materialIndex].colors32[vertexIndex + j];
+                        text.textInfo.meshInfo[materialIndex].colors32[vertexIndex + j] = color.WithA(vertexColor.a);
+                    }
+                }
+
+                if (textEffectController == null)
+                    text.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
             }
+        }
 
-            Text.text = tmpContent;
+        private Color GetLinkColorByID(string linkId)
+        {
+            // 决定这个链接用什么颜色
+            Color color;
+            if (linkId == pressedId)
+                color = pressedColor;
+            else if (linkVisited.Contains(linkId))
+                color = visitedColor;
+            else
+                color = linkColor;
+            return color;
         }
     }
 }
