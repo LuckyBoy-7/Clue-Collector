@@ -4,7 +4,7 @@ using System.Linq;
 using Lucky.Audio;
 using Lucky.Dialogs;
 using Lucky.Interactive;
-using Lucky.Text;
+using Lucky.UI.Text;
 using Lucky.Utilities;
 using UnityEngine;
 using UnityEngine.UI;

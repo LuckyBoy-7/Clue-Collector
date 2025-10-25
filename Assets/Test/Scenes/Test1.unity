@@ -156,8 +156,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00018311, y: -0.0015869}
-  m_SizeDelta: {x: 1225.0737, y: 649.8075}
+  m_AnchoredPosition: {x: 38.2636, y: 1.365}
+  m_SizeDelta: {x: 1301.6013, y: 652.5406}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &236644550
 MonoBehaviour:
@@ -294,7 +294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lucky.Text.TextController
   isDebug: 1
-  debugDialogKey: test_key
+  debugDialogKey: test_key2
   UseMouseButtonToInteract: 0
   nextKey: 13
   CanSkip: 1
@@ -316,6 +316,8 @@ MonoBehaviour:
   pressedColor: {r: 0, g: 1, b: 0, a: 1}
   visitedColor: {r: 0, g: 0, b: 1, a: 1}
   HandTexture: {fileID: 0}
+  pressedId: 
+  hoverId: 
 --- !u!1 &519900080
 GameObject:
   m_ObjectHideFlags: 0

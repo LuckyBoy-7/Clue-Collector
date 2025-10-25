@@ -34,7 +34,7 @@ namespace Lucky.Inputs
                 bool success = true;
                 foreach (var other in ExclusiveFrom)
                 {
-                    if (other.Needs(key)) // 但凡其他的binding需要这个键位, 我们就不跟他抢
+                    if (other.ContainsKey(key)) // 但凡其他的binding需要这个键位, 我们就不跟他抢
                     {
                         success = false;
                         break;
@@ -50,11 +50,8 @@ namespace Lucky.Inputs
 
             return anySuccess;
         }
-
-        /// <summary>
-        /// 查询这个key对自己来说是否重要, 或者说能不能删
-        /// </summary>
-        public bool Needs(KeyCode key) => keys.Contains(key);
+        
+        public bool ContainsKey(KeyCode key) => keys.Contains(key);
 
         /// <summary>
         /// 清空键盘binding, 尽量留一个没被其他 binding 绑过的 key
